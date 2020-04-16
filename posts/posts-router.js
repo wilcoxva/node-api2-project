@@ -25,14 +25,14 @@ router.post("/:id/comments", (req, res) => {
 		return res.status(400).json({ errorMessage: "Please provide text for the comment." })
     }
     
-    db.insert(req.body)
-            .then((post) => {
-                res.status(201).json(post)
+    db.insertComment({...req.body, post_id: req.params.id} )
+            .then((comment) => {
+                res.status(201).json(comment)
             })
             .catch((error) => {
                 console.log(error)
                 res.status(500).json({
-                    message: "Error adding the post",
+                    message: "Error adding the comment",
                 })
             })
 })
